@@ -3,7 +3,9 @@
 #include"clipboard.h"
 
 int main(){
-    printf("%s\n", load_clipboard());
-    printf("%d\n", save_clipboard("123"));
+    char* clip = load_clipboard();
+    printf("old: %s\n", clip);
+    printf("success: %d\n", save_clipboard("123"));
+    printf("new: %s\n", clip);
     return 0;
 }
