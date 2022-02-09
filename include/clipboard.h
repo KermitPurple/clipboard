@@ -17,10 +17,10 @@ bool save_clipboard(const char* string){
     if(asprintf(&cmd, "printf '%s' | pbcopy", string) <= 0)
         return false;
     FILE* pipe = popen(cmd, "r");
-    free(cmd);
     if(pipe == NULL)
         return false;
     pclose(pipe);
+    free(cmd);
     return true;
 #else
     return false
@@ -32,7 +32,7 @@ char* load_clipboard(){
     FILE* pipe = popen("pbpaste", "r");
     if(pipe == NULL)
         return NULL;
-    char* buffer[1000] = {0};
+    char buffer[1000] = {0};
     int index = 0;
     int ch;
     while((ch = getc(pipe)) != EOF){
