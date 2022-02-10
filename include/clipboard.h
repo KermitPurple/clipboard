@@ -32,18 +32,9 @@ char* load_clipboard(){
     FILE* pipe = popen("pbpaste", "r");
     if(pipe == NULL)
         return NULL;
-    char buffer[1000] = {0};
-    int index = 0;
-    int ch;
-    while((ch = getc(pipe)) != EOF){
-        buffer[index++] = ch;
-    }
-    buffer[index++] = '\0';
-    char* result = malloc(index);
-    if(result){
-        for(int i = 0; i < index; i++)
-            result[i] = buffer[i];
-    }
+    char* result = NULL;
+    size_t capacity = 0;
+    getdelim(&result, &capacity, '\0', pipe);
     pclose(pipe);
     return result;
 #else
